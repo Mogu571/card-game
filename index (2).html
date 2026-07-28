@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>警察与罪犯 — 四人联机卡牌博弈</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="wrap">
+<h1>警察与罪犯 — 四人联机卡牌博弈</h1>
+<div><span class="conn-status conn-wait" id="conn-status">连接中...</span></div>
+
+<!-- 加入/大厅界面 -->
+<div id="join-screen">
+  <div class="section">
+    <div class="sec-title">加入游戏</div>
+    <div class="action-area">
+      <div class="action-row">
+        <span class="action-label">你的名字</span>
+        <input id="my-name" type="text" placeholder="输入名字" style="width:160px">
+      </div>
+      <div class="action-row">
+        <span class="action-label">选择座位</span>
+        <select id="my-seat">
+          <option value="0">座位 1</option>
+          <option value="1">座位 2</option>
+          <option value="2">座位 3</option>
+          <option value="3">座位 4</option>
+        </select>
+      </div>
+      <div class="action-row" style="margin-top:4px">
+        <button class="primary" onclick="joinGame()">加入游戏</button>
+      </div>
+      <div id="join-error" style="font-size:13px;color:#A32D2D;margin-top:4px;display:none"></div>
+    </div>
+  </div>
+  <div class="section">
+    <div class="sec-title">当前在线玩家</div>
+    <div id="lobby-players">等待连接...</div>
+    <div style="margin-top:12px;display:flex;align-items:center;gap:10px">
+      <button class="primary" id="start-btn" onclick="hostStartGame()" disabled>开始游戏</button>
+      <span style="font-size:12px;color:#aaa">需4人全部就位，由座位1发起</span>
+    </div>
+  </div>
+</div>
+
+<!-- 游戏界面 -->
+<div id="game-screen" style="display:none">
+  <div class="phase-bar" id="phase-bar">
+    <div class="phase-btn" id="ph-skill">出技能牌</div>
+    <div class="phase-btn" id="ph-arrest">抓捕</div>
+    <div class="phase-btn" id="ph-vote">审判投票</div>
+    <div class="phase-btn" id="ph-punish">惩罚</div>
+  </div>
+  <div class="section">
+    <div class="sec-title">玩家状态</div>
+    <div class="players-grid" id="players-grid"></div>
+  </div>
+  <div class="section">
+    <div class="sec-title" id="action-title">操作区</div>
+    <div id="action-content"></div>
+  </div>
+  <div class="section">
+    <div class="sec-title">左轮手枪</div>
+    <div class="revolver-row" id="revolver-display"></div>
+    <div style="font-size:12px;color:#aaa;margin-top:6px">3颗子弹 / 3个空槽，每次审判后继续转动</div>
+  </div>
+  <div class="section">
+    <div class="sec-title">游戏日志</div>
+    <div class="log-area" id="log-area"></div>
+  </div>
+</div>
+
+<!-- 结束界面 -->
+<div id="end-screen" style="display:none">
+  <div class="section">
+    <div class="sec-title">游戏结束 — 最终积分</div>
+    <div id="final-scores"></div>
+    <div style="margin-top:1rem">
+      <button class="primary" onclick="resetGame()">重新开始</button>
+    </div>
+  </div>
+</div>
+</div>
+
+<script src="game.js"></script>
+</body>
+</html>
